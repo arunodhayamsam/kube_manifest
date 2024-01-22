@@ -48,13 +48,11 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
 
       - name: Configure the deployment file
-        # env:
-        #   IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
+        env:
+          IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
         run: |
           cat manifest/deployment.yaml
-          chart_dir="manifest"
-          IMAGE_TAG=$(echo ${{ github.sha }} | head -c 8)
-          sed -i 's/^ *image: .*/  image: node-app:${IMAGE_TAG}/' manifest/deployment.yaml
+          sed -i 's/^ *image: .*/  image: node-app:${env.IMAGE_TAG}/' manifest/deployment.yaml
           cat manifest/deployment.yaml 
       - name: Commit the changes made
         run: | 
