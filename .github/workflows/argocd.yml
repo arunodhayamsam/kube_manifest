@@ -46,7 +46,21 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }} .
           docker push $REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
-          
+
+      - name: Configure the deployment file
+        # env:
+        #   IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
+        run: |
+          chart_dir="manifest"
+          IMAGE_TAG=$(echo ${{ github.sha }} | head -c 8)
+          sed -i "s/^  image: .*/  image: node-app:$IMAGE_TAG/" "$chart_dir/deployment.yaml" 
+      - name: Commit the changes made
+        run: | 
+          git config --global user.name "arunodhayamsam"
+          git config --global user.email "100224916+arunodhayamsam@users.noreply.github.com"
+          git add .
+          git commit -am "updating image tag"
+          git push 
       # - name: Configure the deployment file
       #   env:
       #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
