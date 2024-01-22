@@ -54,7 +54,7 @@ jobs:
           cat manifest/deployment.yaml
           chart_dir="manifest"
           IMAGE_TAG=$(echo ${{ github.sha }} | head -c 8)
-          sed -i "s/^  image: .*/  image: node-app:$IMAGE_TAG/" "$chart_dir/deployment.yaml"
+          sed -i 's/^ *image: .*/  image: node-app:${IMAGE_TAG}/' manifest/deployment.yaml
           cat manifest/deployment.yaml 
       - name: Commit the changes made
         run: | 
