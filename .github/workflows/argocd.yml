@@ -51,7 +51,7 @@ jobs:
         # env:
         #   IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
         run: |
-          cat cat manifest/deployment.yaml
+          cat manifest/deployment.yaml
           chart_dir="manifest"
           IMAGE_TAG=$(echo ${{ github.sha }} | head -c 8)
           sed -i "s/^  image: .*/  image: node-app:$IMAGE_TAG/" "$chart_dir/deployment.yaml"
