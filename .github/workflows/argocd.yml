@@ -61,6 +61,7 @@ jobs:
           git config --global user.email "100224916+arunodhayamsam@users.noreply.github.com"
           git commit -am "updating image tag"
           git push
+          
       # - name: Configure the deployment file
       #   env:
       #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
