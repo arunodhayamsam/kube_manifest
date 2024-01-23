@@ -51,8 +51,10 @@ jobs:
         env:
           IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
         run: |
+          TAG=${env.IMAGE_TAG}
+          echo $TAG
           cat manifest/deployment.yaml
-          sed -i '/^ *image:/ s/:.*/: node-app:${env.IMAGE_TAG}/' manifest/deployment.yaml
+          sed -i '/^ *image:/ s/:.*/: node-app:${TAG}/' manifest/deployment.yaml
 
           cat manifest/deployment.yaml 
       - name: Commit the changes made
@@ -61,7 +63,7 @@ jobs:
           git config --global user.email "100224916+arunodhayamsam@users.noreply.github.com"
           git commit -am "updating image tag"
           git push
-          
+
       # - name: Configure the deployment file
       #   env:
       #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
