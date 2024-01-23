@@ -58,18 +58,18 @@ jobs:
           sed -i -e "/^\s*image:/ s/:.*/: 725972464939.dkr.ecr.us-east-1.amazonaws.com\/node-app:$TAG/" manifest/deployment.yaml
           cat manifest/deployment.yaml 
 
-      - name: Configure the deployment file
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ secrets.DOCKER_IMAGE_REPO }} 
-          IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)
-        run: |
-          DOCKER=$REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
-          VERSION_ID=${{ github.event.inputs.chartversion}}
-          sed -i 's@VERSION@'"$VERSION_ID"'@' eks-charts/Chart.yaml
-          sed -i 's@CONTAINER_IMAGE@'"$DOCKER"'@' eks-charts/values.yaml
-          cat eks-charts/Chart.yaml
-          cat eks-charts/values.yaml
+      # - name: Configure the deployment file
+      #   env:
+      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     REPOSITORY: ${{ secrets.DOCKER_IMAGE_REPO }} 
+      #     IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)
+      #   run: |
+      #     DOCKER=$REGISTRY/$REPOSITORY:${{ env.IMAGE_TAG }}
+      #     VERSION_ID=${{ github.event.inputs.chartversion}}
+      #     sed -i 's@VERSION@'"$VERSION_ID"'@' eks-charts/Chart.yaml
+      #     sed -i 's@CONTAINER_IMAGE@'"$DOCKER"'@' eks-charts/values.yaml
+      #     cat eks-charts/Chart.yaml
+      #     cat eks-charts/values.yaml
 
       - name: Commit the changes made
         run: | 
