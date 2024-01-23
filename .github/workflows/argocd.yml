@@ -51,7 +51,7 @@ jobs:
         env:
           IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
         run: |
-          TGA=${{ env.IMAGE_TAG }}
+          TAG=${{ env.IMAGE_TAG }}
           echo ${{ env.IMAGE_TAG }}
           echo $TAG
           cat manifest/deployment.yaml
