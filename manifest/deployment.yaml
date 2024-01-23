@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: node-app:${IMAGE_TAG}
+        image: node-app:${env.IMAGE_TAG}
         ports:
         - containerPort: 80
