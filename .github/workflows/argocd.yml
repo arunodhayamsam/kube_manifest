@@ -50,13 +50,13 @@ jobs:
       - name: Configure the deployment file
         env:
           IMAGE_TAG: $(echo ${{ github.sha }} | head -c 8)  
-          REGION: ${{ secrets.AWS_REGION }}
         run: |
           TAG=${{ env.IMAGE_TAG }}
           echo ${{ env.IMAGE_TAG }}
+          node-app=725972464939.dkr.ecr.us-east-1.amazonaws.com/node-app
           echo $TAG
           cat manifest/deployment.yaml
-          sed -i "/^ *image:/ s/:.*/: 725972464939.dkr.ecr.$REGION.amazonaws.com/node-app:$TAG/" manifest/deployment.yaml
+          sed -i "/^ *image:/ s/:.*/: $node-app:$TAG/" manifest/deployment.yaml
 
           cat manifest/deployment.yaml 
       - name: Commit the changes made
